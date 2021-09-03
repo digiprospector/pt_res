@@ -39,22 +39,20 @@ def get_page(item):
         f.close()
 
 if __name__ == '__main__':
-    while True:
-        user_agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36'
-        json_data = open('site.json', encoding='utf-8')
-        json_data = json.load(json_data)
-        for item in json_data:
-            try:
-                if item['referer']:
-                    headers = {
-                        'user-agent': user_agent,
-                        'referer': item['referer'],
-                        'cookie': item['cookie']
-                    }
-            except:
+    user_agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36'
+    json_data = open('site.json', encoding='utf-8')
+    json_data = json.load(json_data)
+    for item in json_data:
+        try:
+            if item['referer']:
                 headers = {
                     'user-agent': user_agent,
+                    'referer': item['referer'],
                     'cookie': item['cookie']
                 }
-            get_page(item)
-        time.sleep(43200) #根据需求选择重复执行时间，时间单位为秒
+        except:
+            headers = {
+                'user-agent': user_agent,
+                'cookie': item['cookie']
+            }
+        get_page(item)
